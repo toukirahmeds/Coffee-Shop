@@ -39,7 +39,23 @@ The missing implementations are:
         "updatedAt" : "DateTime"
     }
     ```
-## Architecture Design
+## Backend Architecture
+- The expressjs framework has been used to develop the backend server.
+- Node's npm package "ws" has been used to build the websocket server to handle the sending of notifications to
+  the connected clients when the orders are ready for delivery. The better solution would have been using "socket.io" but due to lack of time, I have quickly implemented the socket server with "ws".
+- The rest api endpoints are available at the url "http://localhost:3000"
+- ### Rest API Endpoints
+    - /menu_items/create
+        Creates a new menu item.
+    - /menu_items/details/:id
+        Get the details of the item with id provided inthe route param.
+    - /menu_items/list
+        Get the list of all the menu items in the database.
+    - /orders/create
+        Create a new order.
+    - /orders/details/:id
+        Get the details of the order with id provided in the route param.
+- The websocket is available at the url "ws://localhost:4000"
 
 
 ## Installation
