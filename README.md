@@ -57,7 +57,12 @@ The missing implementations are:
     - /orders/details/:id
         Get the details of the order with id provided in the route param.
 - The websocket is available at the url "ws://localhost:4000"
-
+- A CronJob is running in the backend which will execute the job functions every 10 seconds and check for the orders
+  which have a state of "preparing" and whose "deliveryTime" is less than or equal to the current time. The found orders' state value will then be updated to "ready" and notification with message "Your order is ready" is sent to the clients connected to the websocket server.
+- The mongoose schema models for the mongo collections will be found in the folder "/models".
+- The expressjs route implementations will be found in the folder "/routes"
+- The Cronjob implementation will be found in the folder "/schedulers"
+- The helpers have been implemented in the folder "/helpers"
 
 ## Installation
 - In the parent folder of the project, install the npm dependencies using "npm install"
