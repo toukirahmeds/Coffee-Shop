@@ -1,4 +1,9 @@
 # Coffee-Shop
+### Important
+The missing implementations are:
+- Unit Tests
+- Proper Validation for the request payloads
+- Proper implementation of Error-Handling
 
 ## Database Design
 - ### MenuItem
@@ -9,7 +14,7 @@
         "price" : "number", (minimum value: 0)
         "taxRate": "number", (0-100)
         "preparationTime" : "number", (seconds)
-        "discountOffer" : {
+        "discountOffer" : { 
             "orderedWithItemId": "string",
             "discountPercentage" : "number"
         },
@@ -17,6 +22,7 @@
         "updatedAt" : "DateTime"
     }
     ```
+    
 - ### Order
     ```
     {
@@ -33,6 +39,15 @@
         "updatedAt" : "DateTime"
     }
     ```
+## Architecture Design
+
+
+## Installation
+- In the parent folder of the project, install the npm dependencies using "npm install"
+- Run the node server using "npm start"
+- Install the Google Chrome browser plugin Smart Websocket client from "https://chrome.google.com/webstore/detail/smart-websocket-client/omalebghpgejjiaoknljcfmglgbpocdp"
+- Open the Smart Websocket and then connect to the server websocket with url "ws://localhost:4000" and then press "connect" button.
+- Import the POSTMAN collection given at "https://github.com/toukirahmeds/Coffee-Shop/blob/main/API%20routes.postman_collection.json"
 
 ## Features
 
@@ -47,15 +62,16 @@ To create a menu item in the database, make a "GET" request using postman to the
 with the following payload:
 ```
 {
-    "name": "string",
-    "price" : "number",
-    "taxRate" : "number",
-    "discountOffer" : {
+    "name": "string", (required)
+    "price" : "number", (required)
+    "taxRate" : "number", (required)
+    "discountOffer" : { (not required)
         "orderedWithItemId" : "string",
         "discountPercentage" : "number"
     }
 }
 ```
+"orderedWithItemId" is the id of the item for which the current item will get the discount.
 
 ### Get menu item details
 To get the details of a menu item, make a "GET" request using postman to the url "http://localhost:3000/menu_items/details/${itemId}"
@@ -69,10 +85,19 @@ To get the menu item list, make a "Get" request using postman to the url "http:/
 To create an order, make a "POST" request using postman to the url "http://localhost:3000/orders/create" with the payload:
 ```
 {
-    "customerName": "string",
-    "orderedItems" : [{
-        "itemId" : "string",
-        "quantity" : "number"
+    "customerName": "string", (required)
+    "orderedItems" : [{ (required)
+        "itemId" : "string", (required)
+        "quantity" : "number" (required)
     }]
 }
 ```
+
+### Get order details
+To get the details of an order, make a "GET" request using postman to the url
+"http://localhost:3000/orders/details/${orderId}" where orderId is the id of the order.
+
+### Notify users when the order has been prepared
+User connected to the websocket server, will automatically get the notification "Your order is ready" when the current time
+is more than or equal to the order's delivery time.
+
