@@ -3,10 +3,29 @@ const Order = require("../models/Order");
 const orderHelpers = require("../helpers/order");
 const menuItemHelpers = require("../helpers/menu_item");
 
-router.get("/details/:id", (req, res) => {
+/**
+ * Get the order details using the route param id provided.
+ */
+router.get("/details/:id", async (req, res) => {
+    const orderId = req.params.id;
+    let orderDetails;
+    try {
+        orderDetails = await Order.findById(orderId).exec();
+        console.log(orderDetails);
+    } catch(error) {
+        return res.status(500).send(error);
+    }
 
+    if(!orderDetails) {
+        return res.status(404).end("Order not found");
+    }
+
+    return res.send(orderDetails);
 });
 
+/**
+ * Create a new order.
+ */
 router.post("/create", async (req, res) => {
     const newObj = req.body;
     let menuItemDetailsList = [];
@@ -14,16 +33,22 @@ router.post("/create", async (req, res) => {
         const menuItemIds = newObj.orderedItems.map(({itemId}) => itemId);
         menuItemDetailsList = await menuItemHelpers.getMenuItemsByIds(menuItemIds);
     } catch(error) {
-        throw error;
+        return res.status(500).send(error);
     }
 
     newObj.totalBill = 0
     try {
         newObj.totalBill = await orderHelpers.getTotalBill(newObj.orderedItems, menuItemDetailsList);
     } catch(error) {
-        throw error;
+        return res.status(500).send(error);
     }
-    const totalPreparationTime = orderHelpers.getTotalPreparationTime(newObj.orderedItems, menuItemDetailsList);
+    let totalPreparationTime;
+    try {
+        totalPreparationTime = orderHelpers.getTotalPreparationTime(newObj.orderedItems, menuItemDetailsList);
+    } catch(error) {
+        return res.status(500).send(error);
+    }
+
     // Calculate the delivery time of the order.
     const nowTimeMilliseconds = new Date().getTime();
     const deliveryTime = new Date(nowTimeMilliseconds + totalPreparationTime * 1000);
@@ -37,7 +62,7 @@ router.post("/create", async (req, res) => {
     try {
         createdOrder = await newOrder.save();
     } catch(error) {
-        throw error;
+        return res.status(500).send(error);
     }
 
     return res.send(createdOrder);

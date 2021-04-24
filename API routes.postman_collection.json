@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "b726285e-f40e-4bcb-b019-44fa7cb4ba0b",
+		"name": "Agnos Interview API routes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Menu Item",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Menu Item List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/menu_items/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"menu_items",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Menu Item Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/menu_items/details/6083d9e7124144604aa43343",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"menu_items",
+						"details",
+						"6083d9e7124144604aa43343"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customerName\": \"Toukir\",\n    \"orderedItems\" : [{\n        \"itemId\" : \"6083d9e7124144604aa43343\",\n        \"quantity\" : 1\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/orders/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"orders",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/orders/details/608417ae92bf40b4bbb7c23c",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"orders",
+						"details",
+						"608417ae92bf40b4bbb7c23c"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
