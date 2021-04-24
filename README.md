@@ -43,6 +43,7 @@ The missing implementations are:
 - The expressjs framework has been used to develop the backend server.
 - Node's npm package "ws" has been used to build the websocket server to handle the sending of notifications to
   the connected clients when the orders are ready for delivery. The better solution would have been using "socket.io" but due to lack of time, I have quickly implemented the socket server with "ws".
+- Mongo Queries have been implemented using the node's mongoose ODM library.
 - The rest api endpoints are available at the url "http://localhost:3000"
 - ### Rest API Endpoints
     - /menu_items/create
